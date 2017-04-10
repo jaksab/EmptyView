@@ -20,7 +20,7 @@ import android.widget.TextView;
  */
 
 @SuppressWarnings("unused,WeakerAccess")
-public class TrueEmptyView {
+public class EmptyView {
 
 
     //
@@ -54,12 +54,12 @@ public class TrueEmptyView {
     //
 
 
-    private TrueEmptyView(Context context, ViewGroup parent,
-                          EmptyViewOption emptyViewOption,
-                          EmptyViewOption customViewOption,
-                          EmptyViewOption connectionViewOption,
-                          int textResId, int buttonResId,
-                          OnClickEmptyViewListener onClickListener) {
+    private EmptyView(Context context, ViewGroup parent,
+                      EmptyViewOption emptyViewOption,
+                      EmptyViewOption customViewOption,
+                      EmptyViewOption connectionViewOption,
+                      int textResId, int buttonResId,
+                      OnClickEmptyViewListener onClickListener) {
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.parent = parent;
@@ -150,7 +150,7 @@ public class TrueEmptyView {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        TrueEmptyView.this.animation = null;
+                        EmptyView.this.animation = null;
                     }
 
                     @Override
@@ -185,7 +185,7 @@ public class TrueEmptyView {
     //
 
 
-    public TrueEmptyView show() {
+    public EmptyView show() {
         if (getEmptyView() != null) {
             try {
                 getEmptyView().setVisibility(View.VISIBLE);
@@ -196,7 +196,7 @@ public class TrueEmptyView {
         return this;
     }
 
-    public TrueEmptyView hide() {
+    public EmptyView hide() {
         if (getEmptyView() != null) {
             try {
                 getEmptyView().setVisibility(View.GONE);
@@ -207,7 +207,7 @@ public class TrueEmptyView {
         return this;
     }
 
-    public TrueEmptyView hideContent() {
+    public EmptyView hideContent() {
         if (parent != null) {
             for (int i = 0; i < parent.getChildCount(); i++) {
                 try {
@@ -224,7 +224,7 @@ public class TrueEmptyView {
         return this;
     }
 
-    public TrueEmptyView showContent() {
+    public EmptyView showContent() {
         if (parent != null) {
             for (int i = 0; i < parent.getChildCount(); i++) {
                 try {
@@ -244,13 +244,13 @@ public class TrueEmptyView {
     //
 
 
-    public TrueEmptyView progress() {
+    public EmptyView progress() {
         // TODO:
         this.state = States.PROGRESS;
         return this;
     }
 
-    public TrueEmptyView empty() {
+    public EmptyView empty() {
         if (emptyViewOption != null) {
             View v = createOrGetEmptyView();
             if (v != null) {
@@ -262,7 +262,7 @@ public class TrueEmptyView {
         return this;
     }
 
-    public TrueEmptyView custom() {
+    public EmptyView custom() {
         if (customViewOption != null) {
             View v = createOrGetEmptyView();
             if (v != null) {
@@ -274,7 +274,7 @@ public class TrueEmptyView {
         return this;
     }
 
-    public TrueEmptyView connection() {
+    public EmptyView connection() {
         if (connectionViewOption != null) {
             View v = createOrGetEmptyView();
             if (v != null) {
@@ -286,7 +286,7 @@ public class TrueEmptyView {
         return this;
     }
 
-    public TrueEmptyView reset() {
+    public EmptyView reset() {
         View v = getEmptyView();
         if (v != null) {
             try {
@@ -375,8 +375,8 @@ public class TrueEmptyView {
             return this;
         }
 
-        public TrueEmptyView build() {
-            return new TrueEmptyView(context, parent, emptyViewOption, customViewOption,
+        public EmptyView build() {
+            return new EmptyView(context, parent, emptyViewOption, customViewOption,
                     connectionViewOption, textStyleId, buttonStyleId, onClickListener);
         }
     }
@@ -449,7 +449,7 @@ public class TrueEmptyView {
 
 
     public interface EmptyViewAdapterListener {
-        void prepareEmptyView(TrueEmptyView trueEmptyView);
+        void prepareEmptyView(EmptyView trueEmptyView);
     }
 
     public interface OnClickEmptyViewListener {
