@@ -92,7 +92,16 @@ public class EmptyView {
             View v = getEmptyView();
             if (v == null) {
                 v = inflater.inflate(R.layout.empty_view, parent, false);
-                parent.addView(v);
+                final View finalV = v;
+                v.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            parent.addView(finalV);
+                        } catch (Exception ignored) {
+                        }
+                    }
+                });
             }
             return v;
         } catch (Exception e) {
@@ -173,8 +182,8 @@ public class EmptyView {
 
     private void stopAndRemoveAnimation() {
         try {
-            if (animation != null)
-                animation.cancel();
+//            if (animation != null)
+//                animation.cancel();
         } catch (Exception ignored) {
         }
     }
@@ -287,15 +296,20 @@ public class EmptyView {
     }
 
     public EmptyView reset() {
-        View v = getEmptyView();
+        final View v = getEmptyView();
         if (v != null) {
-            try {
-                stopAndRemoveAnimation();
-                parent.removeView(v);
-                this.state = States.NONE;
-                this.visible = false;
-            } catch (Exception ignored) {
-            }
+            v.post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        stopAndRemoveAnimation();
+                        parent.removeView(v);
+                        state = States.NONE;
+                        visible = false;
+                    } catch (Exception ignored) {
+                    }
+                }
+            });
         }
         return this;
     }
