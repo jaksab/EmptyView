@@ -33,6 +33,8 @@ public class EmptyView {
     private EmptyViewOption emptyViewOption;
     private EmptyViewOption customViewOption;
     private EmptyViewOption connectionViewOption;
+    private EmptyViewOption bannedViewOption;
+    private EmptyViewOption accessDeniedViewOption;
     private OnClickEmptyViewListener onClickListener;
 
 
@@ -58,6 +60,8 @@ public class EmptyView {
                       EmptyViewOption emptyViewOption,
                       EmptyViewOption customViewOption,
                       EmptyViewOption connectionViewOption,
+                      EmptyViewOption bannedViewOption,
+                      EmptyViewOption accessDeniedViewOption,
                       int textResId, int buttonResId,
                       OnClickEmptyViewListener onClickListener) {
         this.context = context;
@@ -66,6 +70,8 @@ public class EmptyView {
         this.emptyViewOption = emptyViewOption;
         this.customViewOption = customViewOption;
         this.connectionViewOption = connectionViewOption;
+        this.bannedViewOption = bannedViewOption;
+        this.accessDeniedViewOption = accessDeniedViewOption;
         this.textResId = textResId;
         this.buttonResId = buttonResId;
         this.onClickListener = onClickListener;
@@ -92,16 +98,7 @@ public class EmptyView {
             View v = getEmptyView();
             if (v == null) {
                 v = inflater.inflate(R.layout.empty_view, parent, false);
-                final View finalV = v;
-                v.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            parent.addView(finalV);
-                        } catch (Exception ignored) {
-                        }
-                    }
-                });
+                parent.addView(v);
             }
             return v;
         } catch (Exception e) {
@@ -295,6 +292,30 @@ public class EmptyView {
         return this;
     }
 
+    public EmptyView banned() {
+        if (bannedViewOption != null) {
+            View v = createOrGetEmptyView();
+            if (v != null) {
+                fillEmptyView(v, bannedViewOption);
+                this.state = States.BANNED;
+                visible = true;
+            }
+        }
+        return this;
+    }
+
+    public EmptyView accessDenied() {
+        if (accessDeniedViewOption != null) {
+            View v = createOrGetEmptyView();
+            if (v != null) {
+                fillEmptyView(v, accessDeniedViewOption);
+                this.state = States.ACCESS_DENIED;
+                visible = true;
+            }
+        }
+        return this;
+    }
+
     public EmptyView reset() {
         final View v = getEmptyView();
         if (v != null) {
@@ -336,6 +357,8 @@ public class EmptyView {
         private EmptyViewOption emptyViewOption;
         private EmptyViewOption customViewOption;
         private EmptyViewOption connectionViewOption;
+        private EmptyViewOption bannedViewOption;
+        private EmptyViewOption accessDeniedViewOption;
         private OnClickEmptyViewListener onClickListener;
         private int textStyleId = EmptyViewOption.NO_RESOURCE;
         private int buttonStyleId = EmptyViewOption.NO_RESOURCE;
@@ -367,6 +390,20 @@ public class EmptyView {
             return this;
         }
 
+        public Builder banned(EmptyViewOption emptyViewOption) {
+            this.bannedViewOption = emptyViewOption;
+            if (this.bannedViewOption != null)
+                this.bannedViewOption.state = States.BANNED;
+            return this;
+        }
+
+        public Builder accessDenied(EmptyViewOption emptyViewOption) {
+            this.accessDeniedViewOption = emptyViewOption;
+            if (this.accessDeniedViewOption != null)
+                this.accessDeniedViewOption.state = States.ACCESS_DENIED;
+            return this;
+        }
+
         public Builder connection(EmptyViewOption emptyViewOption) {
             this.connectionViewOption = emptyViewOption;
             if (this.connectionViewOption != null)
@@ -390,8 +427,8 @@ public class EmptyView {
         }
 
         public EmptyView build() {
-            return new EmptyView(context, parent, emptyViewOption, customViewOption,
-                    connectionViewOption, textStyleId, buttonStyleId, onClickListener);
+            return new EmptyView(context, parent, emptyViewOption, customViewOption, connectionViewOption,
+                    bannedViewOption, accessDeniedViewOption, textStyleId, buttonStyleId, onClickListener);
         }
     }
 
@@ -453,7 +490,8 @@ public class EmptyView {
     public enum States {
         NONE,
         PROGRESS, EMPTY,
-        CUSTOM, CONNECTION
+        CUSTOM, CONNECTION,
+        ACCESS_DENIED, BANNED
     }
 
 
