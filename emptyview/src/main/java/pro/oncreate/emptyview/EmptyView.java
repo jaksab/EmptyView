@@ -45,7 +45,7 @@ public class EmptyView {
 
     private LayoutInflater inflater;
     private States state;
-    private boolean visible;
+    private boolean visible, enable;
     private int textResId;
     private int buttonResId;
     private Animation animation;
@@ -78,6 +78,7 @@ public class EmptyView {
 
         this.state = States.NONE;
         this.visible = false;
+        this.enable = true;
         animation = AnimationUtils.loadAnimation(context, R.anim.flip_anim);
     }
 
@@ -119,8 +120,7 @@ public class EmptyView {
                 textView.setText(emptyViewOption.text);
 
                 int resId = emptyViewOption.textStyleId != EmptyViewOption.NO_RESOURCE ?
-                        emptyViewOption.textStyleId : textResId != EmptyViewOption.NO_RESOURCE ?
-                        textResId : EmptyViewOption.NO_RESOURCE;
+                        emptyViewOption.textStyleId : textResId;
                 if (resId != EmptyViewOption.NO_RESOURCE)
                     applyTextStyle(resId, textView);
 
@@ -192,7 +192,7 @@ public class EmptyView {
 
 
     public EmptyView show() {
-        if (getEmptyView() != null) {
+        if (getEmptyView() != null && enable) {
             try {
                 getEmptyView().setVisibility(View.VISIBLE);
                 visible = true;
@@ -203,7 +203,7 @@ public class EmptyView {
     }
 
     public EmptyView hide() {
-        if (getEmptyView() != null) {
+        if (getEmptyView() != null && enable) {
             try {
                 getEmptyView().setVisibility(View.GONE);
                 visible = false;
@@ -214,7 +214,7 @@ public class EmptyView {
     }
 
     public EmptyView hideContent() {
-        if (parent != null) {
+        if (parent != null && enable) {
             for (int i = 0; i < parent.getChildCount(); i++) {
                 try {
                     View v = parent.getChildAt(i);
@@ -257,7 +257,7 @@ public class EmptyView {
     }
 
     public EmptyView empty() {
-        if (emptyViewOption != null) {
+        if (emptyViewOption != null && enable) {
             View v = createOrGetEmptyView();
             if (v != null) {
                 fillEmptyView(v, emptyViewOption);
@@ -269,7 +269,7 @@ public class EmptyView {
     }
 
     public EmptyView custom() {
-        if (customViewOption != null) {
+        if (customViewOption != null && enable) {
             View v = createOrGetEmptyView();
             if (v != null) {
                 fillEmptyView(v, customViewOption);
@@ -281,7 +281,7 @@ public class EmptyView {
     }
 
     public EmptyView connection() {
-        if (connectionViewOption != null) {
+        if (connectionViewOption != null && enable) {
             View v = createOrGetEmptyView();
             if (v != null) {
                 fillEmptyView(v, connectionViewOption);
@@ -293,7 +293,7 @@ public class EmptyView {
     }
 
     public EmptyView banned() {
-        if (bannedViewOption != null) {
+        if (bannedViewOption != null && enable) {
             View v = createOrGetEmptyView();
             if (v != null) {
                 fillEmptyView(v, bannedViewOption);
@@ -305,7 +305,7 @@ public class EmptyView {
     }
 
     public EmptyView accessDenied() {
-        if (accessDeniedViewOption != null) {
+        if (accessDeniedViewOption != null && enable) {
             View v = createOrGetEmptyView();
             if (v != null) {
                 fillEmptyView(v, accessDeniedViewOption);
@@ -345,6 +345,13 @@ public class EmptyView {
         return visible;
     }
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     //
     // Empty View builder
