@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 /**
  * Created by Andrii Konovalenko, 2014-2017 years.
- * Copyright © 2017 [Andrii Konovalenko]. All Rights Reserved.
+ * Copyright 2017 [Andrii Konovalenko]. All Rights Reserved.
  */
 
 @SuppressWarnings("unused,WeakerAccess")
