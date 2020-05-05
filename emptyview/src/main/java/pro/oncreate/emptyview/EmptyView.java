@@ -2,17 +2,17 @@ package pro.oncreate.emptyview;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 /**
  * Created by Andrii Konovalenko, 2014-2017 years.
@@ -48,7 +48,7 @@ public class EmptyView {
     private boolean visible, enable;
     private int textResId;
     private int buttonResId;
-    private Animation animation;
+   // private Animation animation;
 
 
     //
@@ -79,7 +79,7 @@ public class EmptyView {
         this.state = States.NONE;
         this.visible = false;
         this.enable = true;
-        animation = AnimationUtils.loadAnimation(context, R.anim.flip_anim);
+       // animation = AnimationUtils.loadAnimation(context, R.anim.flip_anim);
     }
 
 
@@ -147,23 +147,23 @@ public class EmptyView {
             if (emptyViewOption.imgResId != EmptyViewOption.NO_RESOURCE) {
                 img.setVisibility(View.VISIBLE);
                 img.setImageResource(emptyViewOption.imgResId);
-                img.startAnimation(animation);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        EmptyView.this.animation = null;
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
+//                img.startAnimation(animation);
+//                animation.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        EmptyView.this.animation = null;
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
             } else img.setVisibility(View.GONE);
 
         } catch (Exception ignored) {
