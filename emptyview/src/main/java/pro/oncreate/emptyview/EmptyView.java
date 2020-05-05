@@ -48,7 +48,7 @@ public class EmptyView {
     private boolean visible, enable;
     private int textResId;
     private int buttonResId;
-   // private Animation animation;
+    // private Animation animation;
 
 
     //
@@ -79,7 +79,7 @@ public class EmptyView {
         this.state = States.NONE;
         this.visible = false;
         this.enable = true;
-       // animation = AnimationUtils.loadAnimation(context, R.anim.flip_anim);
+        // animation = AnimationUtils.loadAnimation(context, R.anim.flip_anim);
     }
 
 
@@ -111,9 +111,9 @@ public class EmptyView {
         try {
             stopAndRemoveAnimation();
 
-            TextView textView = (TextView) v.findViewById(R.id.empty_view_text);
-            ImageView img = (ImageView) v.findViewById(R.id.empty_view_img);
-            Button button = (Button) v.findViewById(R.id.empty_view_button);
+            TextView textView = v.findViewById(R.id.empty_view_text);
+            ImageView img = v.findViewById(R.id.empty_view_img);
+            Button button = v.findViewById(R.id.empty_view_button);
 
             if (emptyViewOption.text != null) {
                 textView.setVisibility(View.VISIBLE);
@@ -257,7 +257,7 @@ public class EmptyView {
     }
 
     public EmptyView empty() {
-        if (emptyViewOption != null && enable) {
+        if (emptyViewOption != null && enable && this.state != States.EMPTY) {
             View v = createOrGetEmptyView();
             if (v != null) {
                 fillEmptyView(v, emptyViewOption);
